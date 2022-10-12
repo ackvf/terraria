@@ -1,11 +1,12 @@
 {
   "scripts": {
     "dev": "npm run debug:start:local",
-    "build": "docker build -t ackvf:terraria .",
-    "start": "docker run --name terraria ackvf:terraria",
+    "build": "docker build -t ackvf/terraria .",
+    "start": "docker run --rm --name terraria ackvf/terraria",
     "stop": "docker stop terraria",
-    "debug:start": "docker run --name terraria ackvf:terraria sleep infinity --entrypoint bash",
-    "debug:start:local": "docker run -v %cd%:/run --name terraria ackvf:terraria sleep infinity --entrypoint bash",
-    "debug:enter": "docker exec -it terraria sh"
+    "debug:start": "docker run --rm --name terraria ackvf/terraria sleep infinity",
+    "debug:start:local": "docker run -v %cd%:/terraria/run --rm --name terraria ackvf/terraria sleep infinity",
+    "debug:enter": "docker exec -it terraria sh",
+    "docker:push": "docker push ackvf/terraria"
   }
 }
