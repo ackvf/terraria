@@ -1,12 +1,18 @@
 {
+  "author": "Qwerty <qwerty@qwerty.xyz>",
+  "description": "Terraria dedicated server running in Docker",
+  "version": "1.0.0",
+  "homepage": "https://hub.docker.com/repository/docker/ackvf/terraria",
+  "repository": "https://github.com/ackvf/terraria",
+  "bugs": "https://github.com/ackvf/terraria/issues",
   "scripts": {
-    "dev": "npm run debug:start:local",
-    "build": "docker build -t ackvf/terraria .",
-    "start": "docker run --rm --name terraria ackvf/terraria",
+    "build": "docker build --tag ackvf/terraria .",
+    "start": "docker run --name terraria ackvf/terraria",
     "stop": "docker stop terraria",
-    "debug:start": "docker run --rm --name terraria ackvf/terraria sleep infinity",
-    "debug:start:local": "docker run -v %cd%:/terraria/run --rm --name terraria ackvf/terraria sleep infinity",
-    "debug:enter": "docker exec -it terraria sh",
-    "docker:push": "docker push ackvf/terraria"
+    "push": "docker push ackvf/terraria",
+    "dev": "npm run debug:start:local",
+    "debug:start": "docker run --rm --name terraria -it --entrypoint bash -i -p 7777:7777 ackvf/terraria sleep infinity",
+    "debug:start:local": "docker run -v %cd%:/terraria/run --rm --name terraria -it --entrypoint bash -i -p 7777:7777 ackvf/terraria sleep infinity",
+    "debug:enter": "docker exec -it terraria sh"
   }
 }

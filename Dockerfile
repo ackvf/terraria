@@ -1,5 +1,9 @@
 FROM mono:slim
 
+LABEL maintainer="Qwerty <qwerty@qwerty.xyz>"
+
+EXPOSE 7777
+
 # Update and install needed utils
 RUN apt-get update && \
     apt-get upgrade -y && \
@@ -12,7 +16,7 @@ COPY 2_start.sh /terraria/run/
 COPY run.sh /terraria/run/
 
 # Used by scripts
-ENV DOWNLOAD_VERSION=1445
+ENV DOWNLOAD_VERSION=1446-fixed
 ENV FILENAME_CONFIG=serverconfig.txt
 ENV FILENAME_WORLD=world.wld
 ENV FILENAME_BANLIST=banlist.txt
@@ -21,9 +25,11 @@ ENV FILENAME_BANLIST=banlist.txt
 VOLUME ["/terraria/config"]
 
 # Run the server
-EXPOSE 7777
 WORKDIR /terraria/run
 RUN chmod +x 1_download.sh && \
     chmod +x 2_start.sh && \
     chmod +x run.sh
-CMD ["./run.sh"]
+
+ENTRYPOINT ["./run.sh"]
+
+# ENTRYPOINT vs CMD https://stackoverflow.com/a/34245657/985454

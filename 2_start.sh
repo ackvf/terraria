@@ -1,9 +1,12 @@
 #!/bin/bash
-set -euxo pipefail
+set -euo pipefail
+#set -euxo pipefail # useful during development
 
-cd /terraria/server
+echo "Starting..."
 
-CMD="./TerrariaServer.exe -x64 -config /terraria/config/$FILENAME_CONFIG -banlist /terraria/config/$FILENAME_BANLIST -logpath /terraria/config/logs"
+cd /terraria/config
+
+CMD="../server/TerrariaServer.exe -x64 -config $FILENAME_CONFIG -banlist $FILENAME_BANLIST -logpath logs"
 
 # Create default config files if they don't exist
 
@@ -17,6 +20,7 @@ if [ ! -f "/terraria/config/$FILENAME_BANLIST" ]; then
 fi
 
 # Link Worlds folder to /terraria/config so it will save to the correct location
+
 if [ ! -s "/root/.local/share/Terraria/Worlds" ]; then
   mkdir -p /root/.local/share/Terraria
   ln -sT /terraria/config /root/.local/share/Terraria/Worlds
@@ -39,8 +43,9 @@ else
     exit 1
   fi
   #mono TerrariaServer.exe -config "$CONFIGPATH/$CONFIG_FILENAME" -logpath "/terraria/config/logs" -world "$FILENAME_WORLD" "$@"
-  CMD="$CMD -world /terraria/config/$FILENAME_WORLD"
+  CMD="$CMD -world $FILENAME_WORLD"
 fi
 
-echo "Starting container, CMD: $CMD $@"
+echo "Starting container"
+echo "CMD: $CMD $@"
 mono $CMD $@
