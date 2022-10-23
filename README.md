@@ -1,6 +1,6 @@
-## Motivation
+### Motivation
 
-Having used other Dockerized dedicated Terraria servers before, it was always immensely painful having to reinstall images and recreate containers from scratch whenever new Terraria version was released - and now multiply the pain by number of running instances...  
+Having used other Dockerized dedicated Terraria servers, it was always immensely painful having to reinstall images and recreate containers from scratch whenever new Terraria version was released - and now multiply the pain by number of running instances...  
 I was certain that it should be possible to make this flow easier.  
 This here is my attempt at that.
 
@@ -8,7 +8,7 @@ No longer it is necessary to fetch an updated docker image for every new terrari
 Everything is controlled by environment variables.  
 Clean and simple.
 
-### Credits
+#### Credits
 
 This project was created by modifying:
 - https://github.com/ryansheehan/terraria
@@ -18,20 +18,27 @@ This project was created by modifying:
 
 # Getting started
 
-## Configuring the server
+### 👉 Configuring the server
 *note: Whenever you restart the server container, it downloads new zip from terraria website.*
 
   - [Generic GUI guide](guides/SynologyNAS/README.md) *<- recommended*
   - [Running on Synology NAS](guides/SynologyNAS/README.md)
 
+FYI, these are the necessary environment variables:
+```
+DOWNLOAD_VERSION=1446-fixed
+FILENAME_CONFIG=serverconfig.txt
+FILENAME_WORLD=world.wld
+FILENAME_BANLIST=banlist.txt
+```
 
-## Updating Terraria server version
+### 👉 **Updating Terraria server version**
 
 - Adjust `DOWNLOAD_VERSION` to current latest version e.g. `1446-fixed` and **restart** the container.  
   *Find latest version on [terraria.org](https://terraria.org/) at the bottom "PC Dedicated Server". The version name corresponds to the downloaded file `terraria-server-1446-fixed.zip`.*
 
 
-## Development
+### Development
 
   - [Dockerfile](#dockerfile)
     - [`run`](#cli-docker-run)
@@ -48,14 +55,14 @@ See [package.json](package.json) for available tasks.
 During script development, it is useful to use `set -euxo pipefail`. Read more [here](https://gist.github.com/mohanpedala/1e2ff5661761d3abd0385e8223e16425).
 
 
-## `Dockerfile`
+### `Dockerfile`
 
 The flow is: **source** -> `docker build` -> **image** -> `docker run` -> **container**
 
 1. Build an image locally `npm run build`
 2. Start a container `npm start`
 
-### CLI `docker run`
+#### CLI `docker run`
 - https://docs.docker.com/engine/reference/commandline/run/
 ```
 --entrypoint        Overwrite the default ENTRYPOINT of the image. e.g. --entrypoint bash
@@ -72,7 +79,7 @@ The flow is: **source** -> `docker build` -> **image** -> `docker run` -> **con
 -it                 Allocate pseudo-TTY connected to the container's stdin; creating an interactive bash shell in the container
 ```
 
-### CLI `docker build`
+#### CLI `docker build`
 - https://docs.docker.com/engine/reference/commandline/build/
 ```
 --tag , -t              Name and optionally a tag in the 'name:tag' format
@@ -81,7 +88,7 @@ The flow is: **source** -> `docker build` -> **image** -> `docker run` -> **con
 
 
 
-## Useful commands
+### Useful commands
 
 Start container with "Choose world" interactive prompt.
 
@@ -91,7 +98,7 @@ docker run --rm --name terraria -it --entrypoint bash -i -e FILENAME_WORLD= -p 7
 
 
 
-## Publishing
+### Publishing
 
 1. Make sure to be logged in
     ```
